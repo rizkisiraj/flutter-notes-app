@@ -44,6 +44,7 @@ class OnboardingPage extends StatelessWidget {
                         child: const Text(
                             'Notes App',
                             style: TextStyle(
+                              fontFamily: 'Poppins',
                               fontSize: 40,
                               fontWeight: FontWeight.w600,
                             ),
@@ -57,6 +58,7 @@ class OnboardingPage extends StatelessWidget {
                           child: const Text(
                             'Notes app let you creates notes and summarize your task powered by Open AI.',
                             style: TextStyle(
+                              fontFamily: 'Poppins',
                               fontSize: 24,
                               fontWeight: FontWeight.normal,
                             ),
@@ -69,15 +71,16 @@ class OnboardingPage extends StatelessWidget {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          child: Text('Get Started',
-                            style: TextStyle(
-                              fontSize: 20
-                            ),
-                          ),
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(vertical: 12)
                           ),
-                          onPressed: () {}
+                          onPressed: () {},
+                          child: const Text('Get Started',
+                            style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 20
+                            ),
+                          ),
                         )
                       )
                     )
