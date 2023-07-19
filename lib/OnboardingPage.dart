@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/HomePage.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -74,7 +75,9 @@ class OnboardingPage extends StatelessWidget {
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(vertical: 12)
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+                          },
                           child: const Text('Get Started',
                             style: TextStyle(
                                 fontFamily: 'Poppins',
