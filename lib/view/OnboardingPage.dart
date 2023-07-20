@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/HomePage.dart';
+import 'package:notes_app/view/HomePage.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({Key? key}) : super(key: key);
@@ -31,8 +31,8 @@ class OnboardingPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: 200,
                 padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 48),
-                decoration: const BoxDecoration(
-                    color: Colors.white,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.inversePrimary,
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(48), topRight: Radius.circular(48))
                 ),
                 child: Column(

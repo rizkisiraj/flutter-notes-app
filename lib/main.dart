@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/OnboardingPage.dart';
+import 'package:notes_app/view/OnboardingPage.dart';
 import 'color_scheme/color_schemes.g.dart';
 
 void main() {
