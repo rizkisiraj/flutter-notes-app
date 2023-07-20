@@ -12,9 +12,9 @@ class OnboardingPage extends StatelessWidget {
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.5,
-            decoration: const BoxDecoration(
-              color: Colors.blueAccent,
-              image: DecorationImage(
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              image: const DecorationImage(
                 image: AssetImage('assets/images/icon3d.png'),
                 scale: 1.4,
               ),
@@ -46,7 +46,7 @@ class OnboardingPage extends StatelessWidget {
                             'Notes App',
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 40,
+                              fontSize: 32,
                               fontWeight: FontWeight.w600,
                             ),
                         ),
@@ -60,7 +60,7 @@ class OnboardingPage extends StatelessWidget {
                             'Notes app let you creates notes and summarize your task powered by Open AI.',
                             style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontSize: 24,
+                              fontSize: 16,
                               fontWeight: FontWeight.normal,
                             ),
                           ),

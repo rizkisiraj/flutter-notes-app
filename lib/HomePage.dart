@@ -9,7 +9,6 @@ class HomePage extends StatelessWidget {
         body: SafeArea(
           child: Container(
             padding: const EdgeInsets.only(top: 30, left: 24, right: 24),
-            color: Colors.white70,
             child: Column(
               children: [
                 Row(
@@ -41,8 +40,8 @@ class HomePage extends StatelessWidget {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(16)
                             ),
-                            color: Colors.blue,
-                            elevation: 3,
+                            color: Theme.of(context).colorScheme.surfaceVariant,
+                            elevation: 0,
                             child: Padding(
                               padding: EdgeInsets.all(16),
                               child: Column(
@@ -56,7 +55,6 @@ class HomePage extends StatelessWidget {
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
                                         fontFamily: 'Poppins',
-                                        color: Colors.white
                                       ),
                                     )
                                   ),
@@ -66,7 +64,6 @@ class HomePage extends StatelessWidget {
                                       style: TextStyle(
                                         fontFamily: 'Poppins',
                                         fontSize: 14,
-                                        color: Colors.white
                                       ),
                                     ),
                                   )
@@ -82,6 +79,10 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: (){},
+          child: const Icon(Icons.add, size: 30),
         ),
       );
     }
