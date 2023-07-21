@@ -54,7 +54,6 @@ class HomePage extends StatelessWidget {
                                   children: [
                                     Container(
                                       width: double.infinity,
-                                      margin: EdgeInsets.only(bottom: 8),
                                       child: Text(
                                           'First Note',
                                         style: TextStyle(
