@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/view/DetailPage.dart';
+import 'package:notes_app/view/NoteFormPage.dart';
 
 class HomePage extends StatelessWidget {
     const HomePage({Key? key}) : super(key: key);
@@ -86,7 +87,9 @@ class HomePage extends StatelessWidget {
           ),
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: (){},
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const NoteFormPage()));
+          },
           child: const Icon(Icons.add, size: 30),
         ),
       );
