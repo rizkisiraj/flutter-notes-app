@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/provider/NotesOperation.dart';
+import 'package:provider/provider.dart';
 
 class NoteFormPage extends StatelessWidget {
   const NoteFormPage({Key? key}): super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String titleText = '';
+    String descriptionText = '';
+
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: (){},
+              onPressed: (){
+                Provider.of<NotesOperation>(context, listen: false).addNote(titleText, descriptionText);
+                Navigator.pop(context);
+              },
               icon: const Icon(
                 Icons.check,
               )
@@ -35,9 +43,9 @@ class NoteFormPage extends StatelessWidget {
                     child: ClipRRect(
                       child: Column(
                         children: [
-                          const Material(
+                          Material(
                             type: MaterialType.transparency,
-                            child: const TextField(
+                            child: TextField(
                               decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Write your title...'
@@ -47,8 +55,11 @@ class NoteFormPage extends StatelessWidget {
                                   fontSize: 32,
                                   fontWeight: FontWeight.w600
                               ),
+                              onChanged: (value) {
+                                titleText = value;
+                              },
                             ),
-                          ),
+                            ),
                           Expanded(
                             child: Material(
                               type: MaterialType.transparency,
@@ -63,6 +74,9 @@ class NoteFormPage extends StatelessWidget {
                                     hintText: "Write your notes here....",
                                     border: InputBorder.none
                                 ),
+                                onChanged: (value) {
+                                  descriptionText = value;
+                                },
                               ),
                             ),
                           )

@@ -10,11 +10,14 @@ class NotesOperation extends ChangeNotifier {
 
   void addNote(String title, String description) {
     Note newNote = Note(DateTime.now().millisecondsSinceEpoch,title, description);
-
     _notes.add(newNote);
+
+    notifyListeners();
   }
 
   void removeNote(id) {
     _notes.removeWhere((note) => note.id == id);
+
+    notifyListeners();
   }
 }

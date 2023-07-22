@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/provider/NotesOperation.dart';
 import 'package:notes_app/view/DetailPage.dart';
 import 'package:notes_app/view/NoteFormPage.dart';
+import 'package:notes_app/model/Note.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
     const HomePage({Key? key}) : super(key: key);
@@ -31,57 +34,21 @@ class HomePage extends StatelessWidget {
                   )
                   ]
                 ),
-                ListView(
-                    padding: EdgeInsets.only(top: 24),
-                    shrinkWrap: true,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailPage()));
+                Consumer<NotesOperation>(
+                  builder: (context, NotesOperation notes, child) {
+                    print("Number of notes: ${notes.getNotes.length}");
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: notes.getNotes.length,
+                        padding: EdgeInsets.only(top: 24),
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          return NoteCard(notes.getNotes[index]);
                         },
-                        child: Hero(
-                          tag: 'note',
-                          child: Container(
-                            height: 132,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16)
-                              ),
-                              color: Theme.of(context).colorScheme.surfaceVariant,
-                              elevation: 0,
-                              child: Padding(
-                                padding: EdgeInsets.all(16),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      child: Text(
-                                          'First Note',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          fontFamily: 'Poppins',
-                                        ),
-                                      )
-                                    ),
-                                    Container(
-                                      width: double.infinity,
-                                      child: Text('lorem ipsum dolor sit amet',
-                                        style: TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
                       ),
-                    ],
-                  ),
+                    );
+                  }
+                ),
               ],
             ),
           ),
@@ -94,4 +61,75 @@ class HomePage extends StatelessWidget {
         ),
       );
     }
+}
+
+class NoteCard extends StatelessWidget {
+  final Note note;
+
+  NoteCard(this.note);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailPage()));
+      },
+      onLongPress: () {
+        showModalBottomSheet(
+            context: context, builder:
+            (BuildContext context) {
+          return Container(
+            padding: EdgeInsets.symmetric(vertical: 8),
+            child: ListTile(
+              title: Text(
+                'Delete',
+                style: const TextStyle(
+                  color: Colors.red,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        }
+        );
+      },
+      child: Container(
+          height: 132,
+          child: Card(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16)
+            ),
+            color: Theme.of(context).colorScheme.surfaceVariant,
+            elevation: 0,
+            child: Padding(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  Container(
+                      width: double.infinity,
+                      child: Text(
+                        note.title,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                          fontFamily: 'Poppins',
+                        ),
+                      )
+                  ), Container(
+                    width: double.infinity,
+                      child: Text(note.description,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
+        ),
+    );
+  }
 }

@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/provider/NotesOperation.dart';
 import 'package:notes_app/view/OnboardingPage.dart';
+import 'package:provider/provider.dart';
 import 'color_scheme/color_schemes.g.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+        create: (context) => NotesOperation(),
+        child: const MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
