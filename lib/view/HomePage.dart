@@ -81,6 +81,10 @@ class NoteCard extends StatelessWidget {
           return Container(
             padding: EdgeInsets.symmetric(vertical: 8),
             child: ListTile(
+              onTap: () {
+                Provider.of<NotesOperation>(context, listen: false).removeNote(note.id);
+                Navigator.pop(context);
+              },
               title: Text(
                 'Delete',
                 style: const TextStyle(
