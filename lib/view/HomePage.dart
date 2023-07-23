@@ -72,7 +72,7 @@ class NoteCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const DetailPage()));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => DetailPage(note: note)));
       },
       onLongPress: () {
         showModalBottomSheet(

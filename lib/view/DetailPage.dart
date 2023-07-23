@@ -1,12 +1,66 @@
 import 'package:flutter/material.dart';
+import 'package:notes_app/model/Note.dart';
+import 'package:notes_app/provider/NotesOperation.dart';
+import 'package:provider/provider.dart';
 
-class DetailPage extends StatelessWidget {
-  const DetailPage({Key? key}): super(key: key);
-  
+class DetailPage extends StatefulWidget {
+
+  final Note note;
+  DetailPage({Key? key, required this.note}) : super(key: key);
+
+  @override
+  _DetailPageState createState() => _DetailPageState();
+
+}
+
+class _DetailPageState extends State<DetailPage> {
+
+  bool _isEditing = false;
+  TextEditingController _titleController = new TextEditingController();
+  TextEditingController _descController = new TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _titleController.text = widget.note.title;
+    _descController.text = widget.note.description;
+  }
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: _isEditing ? [
+          IconButton(
+              onPressed: (){
+                Provider.of<NotesOperation>(context, listen: false).editNote(widget.note.id, _titleController.text, _descController.text);
+                setState(() {
+                  _isEditing = false;
+                });
+              },
+              icon: const Icon(
+                Icons.check,
+              )
+          )
+        ] : [
+          IconButton(
+              onPressed: (){
+                setState(() {
+                  _isEditing = true;
+                });
+              },
+              icon: const Icon(
+                Icons.edit
+              )
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -29,9 +83,11 @@ class DetailPage extends StatelessWidget {
                     child: ClipRRect(
                       child: Column(
                         children: [
-                          const Material(
+                          Material(
                             type: MaterialType.transparency,
-                            child: const TextField(
+                            child: TextField(
+                              controller: _titleController,
+                              enabled: _isEditing,
                               decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Write your title...'
@@ -47,6 +103,8 @@ class DetailPage extends StatelessWidget {
                             child: Material(
                               type: MaterialType.transparency,
                               child: TextField(
+                                controller: _descController,
+                                enabled: _isEditing,
                                 maxLines: null,
                                 keyboardType: TextInputType.multiline,
                                 style: const TextStyle(

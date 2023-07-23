@@ -20,4 +20,11 @@ class NotesOperation extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void editNote(id, title, description) {
+    final index = _notes.indexWhere((note) => note.id == id);
+    _notes[index] = Note(id, title, description);
+
+    notifyListeners();
+  }
 }
