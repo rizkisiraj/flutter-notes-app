@@ -55,7 +55,7 @@ class HomePage extends StatelessWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => const NoteFormPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => NoteFormPage()));
           },
           child: const Icon(Icons.add, size: 30),
         ),
@@ -97,43 +97,47 @@ class NoteCard extends StatelessWidget {
         }
         );
       },
-      child: Container(
-          height: 132,
-          child: Card(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16)
-            ),
-            color: Theme.of(context).colorScheme.surfaceVariant,
-            elevation: 0,
-            child: Padding(
-              padding: EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  Container(
+      borderRadius: BorderRadius.circular(16),
+      child: Hero(
+        tag: 'note ${note.id}',
+        child: Container(
+            height: 132,
+            child: Card(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16)
+              ),
+              color: Theme.of(context).colorScheme.surfaceVariant,
+              elevation: 0,
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Container(
+                        width: double.infinity,
+                        child: Text(
+                          note.title,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            fontFamily: 'Poppins',
+                          ),
+                        )
+                    ), Container(
                       width: double.infinity,
-                      child: Text(
-                        note.title,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          fontFamily: 'Poppins',
-                        ),
-                      )
-                  ), Container(
-                    width: double.infinity,
-                      child: Text(note.description,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 14,
+                        child: Text(note.description,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontFamily: 'Poppins',
+                            fontSize: 14,
+                          ),
                         ),
                       ),
-                    ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
-        ),
+      ),
     );
   }
 }

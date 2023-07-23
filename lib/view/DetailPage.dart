@@ -55,6 +55,9 @@ class _DetailPageState extends State<DetailPage> {
                 setState(() {
                   _isEditing = true;
                 });
+                var snackBar = SnackBar(content: Text('Editing mode'));
+                // Step 3
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               icon: const Icon(
                 Icons.edit
@@ -75,7 +78,7 @@ class _DetailPageState extends State<DetailPage> {
             child: Material(
                 type: MaterialType.transparency,
                 child: Hero(
-                  tag: 'note',
+                  tag: 'note ${widget.note.id}',
                   child: Container(
                     width: double.infinity,
                     padding: const EdgeInsets.all(16.0),
@@ -100,20 +103,23 @@ class _DetailPageState extends State<DetailPage> {
                             ),
                           ),
                           Expanded(
-                            child: Material(
-                              type: MaterialType.transparency,
-                              child: TextField(
-                                controller: _descController,
-                                enabled: _isEditing,
-                                maxLines: null,
-                                keyboardType: TextInputType.multiline,
-                                style: const TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 14
-                                ),
-                                decoration: InputDecoration(
-                                    hintText: "Write your notes here....",
-                                    border: InputBorder.none
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Material(
+                                type: MaterialType.transparency,
+                                child: TextField(
+                                  controller: _descController,
+                                  enabled: _isEditing,
+                                  maxLines: null,
+                                  keyboardType: TextInputType.multiline,
+                                  style: const TextStyle(
+                                      fontFamily: 'Poppins',
+                                      fontSize: 18
+                                  ),
+                                  decoration: InputDecoration(
+                                      hintText: "Write your notes here....",
+                                      border: InputBorder.none
+                                  ),
                                 ),
                               ),
                             ),

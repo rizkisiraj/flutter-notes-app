@@ -3,19 +3,26 @@ import 'package:notes_app/provider/NotesOperation.dart';
 import 'package:provider/provider.dart';
 
 class NoteFormPage extends StatelessWidget {
-  const NoteFormPage({Key? key}): super(key: key);
+  NoteFormPage({Key? key}): super(key: key);
+
+  final TextEditingController _titleController = new TextEditingController();
+  final TextEditingController _descController = new TextEditingController();
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _descController.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    String titleText = '';
-    String descriptionText = '';
 
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
               onPressed: (){
-                Provider.of<NotesOperation>(context, listen: false).addNote(titleText, descriptionText);
+                Provider.of<NotesOperation>(context, listen: false).addNote(_titleController.text, _descController.text);
                 Navigator.pop(context);
               },
               icon: const Icon(
@@ -46,6 +53,7 @@ class NoteFormPage extends StatelessWidget {
                           Material(
                             type: MaterialType.transparency,
                             child: TextField(
+                              controller: _titleController,
                               decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Write your title...'
@@ -55,28 +63,23 @@ class NoteFormPage extends StatelessWidget {
                                   fontSize: 32,
                                   fontWeight: FontWeight.w600
                               ),
-                              onChanged: (value) {
-                                titleText = value;
-                              },
                             ),
                             ),
                           Expanded(
                             child: Material(
                               type: MaterialType.transparency,
                               child: TextField(
+                                controller: _descController,
                                 maxLines: null,
                                 keyboardType: TextInputType.multiline,
                                 style: const TextStyle(
                                     fontFamily: 'Poppins',
-                                    fontSize: 14
+                                    fontSize: 18
                                 ),
                                 decoration: InputDecoration(
                                     hintText: "Write your notes here....",
                                     border: InputBorder.none
                                 ),
-                                onChanged: (value) {
-                                  descriptionText = value;
-                                },
                               ),
                             ),
                           )
