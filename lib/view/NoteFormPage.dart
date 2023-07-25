@@ -54,6 +54,7 @@ class NoteFormPage extends StatelessWidget {
                             type: MaterialType.transparency,
                             child: TextField(
                               controller: _titleController,
+                              autofocus: true,
                               decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Write your title...'

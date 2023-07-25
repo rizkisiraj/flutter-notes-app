@@ -16,18 +16,21 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
 
   bool _isEditing = false;
-  TextEditingController _titleController = new TextEditingController();
-  TextEditingController _descController = new TextEditingController();
+  final TextEditingController _titleController = new TextEditingController();
+  final TextEditingController _descController = new TextEditingController();
+  late FocusNode _descFocusNode;
 
   @override
   void initState() {
     super.initState();
     _titleController.text = widget.note.title;
     _descController.text = widget.note.description;
+    _descFocusNode = FocusNode();
   }
 
   @override
   void dispose() {
+    _descFocusNode.dispose();
     _titleController.dispose();
     _descController.dispose();
     super.dispose();
@@ -52,12 +55,13 @@ class _DetailPageState extends State<DetailPage> {
         ] : [
           IconButton(
               onPressed: (){
+                FocusScope.of(context).requestFocus(_descFocusNode);
                 setState(() {
                   _isEditing = true;
                 });
-                var snackBar = SnackBar(content: Text('Editing mode'));
-                // Step 3
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                // var snackBar = SnackBar(content: Text('Editing mode'));
+                // // Step 3
+                // ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               icon: const Icon(
                 Icons.edit
@@ -90,7 +94,7 @@ class _DetailPageState extends State<DetailPage> {
                             type: MaterialType.transparency,
                             child: TextField(
                               controller: _titleController,
-                              enabled: _isEditing,
+                              readOnly: !_isEditing,
                               decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Write your title...'
@@ -109,14 +113,15 @@ class _DetailPageState extends State<DetailPage> {
                                 type: MaterialType.transparency,
                                 child: TextField(
                                   controller: _descController,
-                                  enabled: _isEditing,
+                                  readOnly: !_isEditing,
+                                  focusNode: _descFocusNode,
                                   maxLines: null,
                                   keyboardType: TextInputType.multiline,
                                   style: const TextStyle(
                                       fontFamily: 'Poppins',
                                       fontSize: 18
                                   ),
-                                  decoration: InputDecoration(
+                                  decoration: const InputDecoration(
                                       hintText: "Write your notes here....",
                                       border: InputBorder.none
                                   ),
