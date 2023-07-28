@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:notes_app/provider/NotesOperation.dart';
 import 'package:provider/provider.dart';
 
@@ -6,12 +7,12 @@ class NoteFormPage extends StatelessWidget {
   NoteFormPage({Key? key}): super(key: key);
 
   final TextEditingController _titleController = new TextEditingController();
-  final TextEditingController _descController = new TextEditingController();
+  late FocusNode myFocusNode = FocusNode();
+  late QuillController _quillController = QuillController.basic();
 
   @override
   void dispose() {
     _titleController.dispose();
-    _descController.dispose();
   }
 
   @override
@@ -22,7 +23,7 @@ class NoteFormPage extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: (){
-                Provider.of<NotesOperation>(context, listen: false).addNote(_titleController.text, _descController.text);
+                Provider.of<NotesOperation>(context, listen: false).addNote(_titleController.text, _quillController.getPlainText());
                 Navigator.pop(context);
               },
               icon: const Icon(
@@ -54,7 +55,6 @@ class NoteFormPage extends StatelessWidget {
                             type: MaterialType.transparency,
                             child: TextField(
                               controller: _titleController,
-                              autofocus: true,
                               decoration: const InputDecoration(
                                   border: InputBorder.none,
                                   hintText: 'Write your title...'
@@ -67,29 +67,28 @@ class NoteFormPage extends StatelessWidget {
                             ),
                             ),
                           Expanded(
-                            child: Material(
-                              type: MaterialType.transparency,
-                              child: TextField(
-                                controller: _descController,
-                                maxLines: null,
-                                keyboardType: TextInputType.multiline,
-                                style: const TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 18
-                                ),
-                                decoration: InputDecoration(
-                                    hintText: "Write your notes here....",
-                                    border: InputBorder.none
-                                ),
+                              child: Container(
+                                  child: QuillEditor(
+                                      focusNode: myFocusNode,
+                                      controller: _quillController,
+                                      autoFocus: false,
+                                      readOnly: false,
+                                      expands: false,
+                                      padding: const EdgeInsets.only(bottom: 8),
+                                      scrollController: ScrollController(),
+                                      scrollable: true,
+                                      placeholder: 'Write your notes...',
+                                  )
                               ),
+                              // child: QuillEditor.basic(controller: _quillController, readOnly: false)
                             ),
-                          )
                         ],
                       ),
                     ),
                   ),
                 )
             ),
+          QuillToolbar.basic(controller: _quillController, multiRowsDisplay: false),
           // )
         ],
       ),

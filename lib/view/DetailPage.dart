@@ -59,9 +59,9 @@ class _DetailPageState extends State<DetailPage> {
                 setState(() {
                   _isEditing = true;
                 });
-                // var snackBar = SnackBar(content: Text('Editing mode'));
-                // // Step 3
-                // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                var snackBar = SnackBar(content: Text('Editing mode'));
+                // Step 3
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               icon: const Icon(
                 Icons.edit
