@@ -124,7 +124,7 @@ class NoteCard extends StatelessWidget {
                         )
                     ), Container(
                       width: double.infinity,
-                        child: Text(note.description,
+                        child: Text(note.descriptionPlainText,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontFamily: 'Poppins',

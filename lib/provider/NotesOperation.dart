@@ -8,8 +8,8 @@ class NotesOperation extends ChangeNotifier {
     return _notes;
   }
 
-  void addNote(String title, String description) {
-    Note newNote = Note(DateTime.now().millisecondsSinceEpoch,title, description);
+  void addNote(String title, String descriptionPlainText, descriptionJson) {
+    Note newNote = Note(DateTime.now().millisecondsSinceEpoch,title, descriptionPlainText, descriptionJson);
     _notes.add(newNote);
 
     notifyListeners();
@@ -21,9 +21,9 @@ class NotesOperation extends ChangeNotifier {
     notifyListeners();
   }
 
-  void editNote(id, title, description) {
+  void editNote(id, title, descriptionPlainText, descriptionJson) {
     final index = _notes.indexWhere((note) => note.id == id);
-    _notes[index] = Note(id, title, description);
+    _notes[index] = Note(id, title, descriptionPlainText, descriptionJson);
 
     notifyListeners();
   }

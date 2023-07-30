@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:notes_app/provider/NotesOperation.dart';
@@ -13,6 +15,7 @@ class NoteFormPage extends StatelessWidget {
   @override
   void dispose() {
     _titleController.dispose();
+    myFocusNode.dispose();
   }
 
   @override
@@ -23,8 +26,9 @@ class NoteFormPage extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: (){
-                Provider.of<NotesOperation>(context, listen: false).addNote(_titleController.text, _quillController.getPlainText());
-                Navigator.pop(context);
+                print(jsonEncode(_quillController.document.toDelta().toJson()));
+                // Provider.of<NotesOperation>(context, listen: false).addNote(_titleController.text, _quillController.getPlainText());
+                // Navigator.pop(context);
               },
               icon: const Icon(
                 Icons.check,
