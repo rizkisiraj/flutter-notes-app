@@ -9,8 +9,8 @@ class NoteFormPage extends StatelessWidget {
   NoteFormPage({Key? key}): super(key: key);
 
   final TextEditingController _titleController = new TextEditingController();
-  late FocusNode myFocusNode = FocusNode();
-  late QuillController _quillController = QuillController.basic();
+  final FocusNode myFocusNode = FocusNode();
+  final QuillController _quillController = QuillController.basic();
 
   @override
   void dispose() {
@@ -26,9 +26,9 @@ class NoteFormPage extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: (){
-                print(jsonEncode(_quillController.document.toDelta().toJson()));
-                // Provider.of<NotesOperation>(context, listen: false).addNote(_titleController.text, _quillController.getPlainText());
-                // Navigator.pop(context);
+                // print(jsonEncode(_quillController.document.toDelta().toJson()));
+                Provider.of<NotesOperation>(context, listen: false).addNote(_titleController.text, _quillController.document.toPlainText(), jsonEncode(_quillController.document.toDelta().toJson()));
+                Navigator.pop(context);
               },
               icon: const Icon(
                 Icons.check,

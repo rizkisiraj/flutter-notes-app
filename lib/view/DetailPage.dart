@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_quill/flutter_quill.dart';
 import 'package:notes_app/model/Note.dart';
 import 'package:notes_app/provider/NotesOperation.dart';
 import 'package:provider/provider.dart';
@@ -17,14 +20,14 @@ class _DetailPageState extends State<DetailPage> {
 
   bool _isEditing = false;
   final TextEditingController _titleController = new TextEditingController();
-  final TextEditingController _descController = new TextEditingController();
   late FocusNode _descFocusNode;
+  late QuillController _quillController;
 
   @override
   void initState() {
     super.initState();
     _titleController.text = widget.note.title;
-    _descController.text = widget.note.description;
+    _quillController = QuillController(document: Document.fromJson(jsonDecode(widget.note.descriptionJson)), selection: const TextSelection.collapsed(offset: 0));
     _descFocusNode = FocusNode();
   }
 
@@ -32,7 +35,7 @@ class _DetailPageState extends State<DetailPage> {
   void dispose() {
     _descFocusNode.dispose();
     _titleController.dispose();
-    _descController.dispose();
+    _quillController.dispose();
     super.dispose();
   }
 
@@ -40,10 +43,10 @@ class _DetailPageState extends State<DetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: _isEditing ? [
+        actions: _isEditing ? <Widget>[
           IconButton(
               onPressed: (){
-                Provider.of<NotesOperation>(context, listen: false).editNote(widget.note.id, _titleController.text, _descController.text);
+                // Provider.of<NotesOperation>(context, listen: false).editNote(widget.note.id, _titleController.text, _descController.text);
                 setState(() {
                   _isEditing = false;
                 });
@@ -59,9 +62,9 @@ class _DetailPageState extends State<DetailPage> {
                 setState(() {
                   _isEditing = true;
                 });
-                var snackBar = SnackBar(content: Text('Editing mode'));
-                // Step 3
-                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                // var snackBar = SnackBar(content: Widget.Text('Editing mode'));
+                // // Step 3
+                // ScaffoldMessenger.of(context).showSnackBar(snackBar);
               },
               icon: const Icon(
                 Icons.edit
@@ -111,25 +114,20 @@ class _DetailPageState extends State<DetailPage> {
                               scrollDirection: Axis.vertical,
                               child: Material(
                                 type: MaterialType.transparency,
-                                child: TextField(
-                                  controller: _descController,
-                                  readOnly: !_isEditing,
-                                  focusNode: _descFocusNode,
-                                  maxLines: null,
-                                  keyboardType: TextInputType.multiline,
-                                  style: const TextStyle(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 18
-                                  ),
-                                  decoration: const InputDecoration(
-                                      hintText: "Write your notes here....",
-                                      border: InputBorder.none
-                                  ),
-                                ),
+                                child: QuillEditor(
+                                    focusNode: _descFocusNode,
+                                    controller: _quillController,
+                                    autoFocus: false,
+                                    readOnly: false,
+                                    expands: false,
+                                    padding: const EdgeInsets.only(bottom: 8),
+                                    scrollController: ScrollController(),
+                                    scrollable: true,
+                                    placeholder: 'Write your notes...',
                               ),
                             ),
                           )
-                        ],
+                          )],
                       ),
                     ),
                   ),
@@ -141,5 +139,5 @@ class _DetailPageState extends State<DetailPage> {
       ),
     );
   }
-  
+
 }
