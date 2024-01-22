@@ -73,16 +73,21 @@ class NoteFormPage extends StatelessWidget {
                           Expanded(
                               child: Container(
                                   child: QuillEditor(
-                                      focusNode: myFocusNode,
-                                      controller: _quillController,
+                                    focusNode: myFocusNode,
+                                    scrollController: ScrollController(),
+                                    configurations: QuillEditorConfigurations(
                                       autoFocus: false,
-                                      readOnly: false,
                                       expands: false,
                                       padding: const EdgeInsets.only(bottom: 8),
-                                      scrollController: ScrollController(),
                                       scrollable: true,
-                                      placeholder: 'Write your notes...',
-                                  )
+                                      placeholder: "Write your notes...",
+                                      controller: _quillController,
+                                      readOnly: false,
+                                      sharedConfigurations: const QuillSharedConfigurations(
+                                        locale: Locale('en'),
+                                      ),
+                                    ),
+                                  ),
                               ),
                               // child: QuillEditor.basic(controller: _quillController, readOnly: false)
                             ),
@@ -92,7 +97,15 @@ class NoteFormPage extends StatelessWidget {
                   ),
                 )
             ),
-          QuillToolbar.basic(controller: _quillController, multiRowsDisplay: false),
+          QuillToolbar.simple(
+            configurations: QuillSimpleToolbarConfigurations(
+              controller: _quillController,
+              multiRowsDisplay: false,
+              sharedConfigurations: const QuillSharedConfigurations(
+                locale: Locale('de'),
+              ),
+            ),
+          ),
           // )
         ],
       ),

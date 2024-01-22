@@ -114,17 +114,15 @@ class _DetailPageState extends State<DetailPage> {
                               scrollDirection: Axis.vertical,
                               child: Material(
                                 type: MaterialType.transparency,
-                                child: QuillEditor(
-                                    focusNode: _descFocusNode,
+                                child: QuillEditor.basic(
+                                  configurations: QuillEditorConfigurations(
                                     controller: _quillController,
-                                    autoFocus: false,
                                     readOnly: false,
-                                    expands: false,
-                                    padding: const EdgeInsets.only(bottom: 8),
-                                    scrollController: ScrollController(),
-                                    scrollable: true,
-                                    placeholder: 'Write your notes...',
-                              ),
+                                    sharedConfigurations: const QuillSharedConfigurations(
+                                      locale: Locale('de'),
+                                    ),
+                                  ),
+                                ),
                             ),
                           )
                           )],
