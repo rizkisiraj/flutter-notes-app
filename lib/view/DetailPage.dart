@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_quill/flutter_quill.dart';
 import 'package:notes_app/model/Note.dart';
-import 'package:notes_app/provider/NotesOperation.dart';
-import 'package:provider/provider.dart';
 
 class DetailPage extends StatefulWidget {
 

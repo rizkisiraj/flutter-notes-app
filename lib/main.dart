@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/provider/NotesOperation.dart';
+import 'package:notes_app/view/HomePage.dart';
 import 'package:notes_app/view/OnboardingPage.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'color_scheme/color_schemes.g.dart';
 
 void main() {
@@ -13,8 +15,32 @@ void main() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  bool isOnboarding = true;
+
+  @override
+  void initState() {
+    super.initState();
+    checkOnboarding();
+  }
+
+  void checkOnboarding() async {
+    final prefs = await SharedPreferences.getInstance();
+    if(prefs.containsKey("isOnboarding")) {
+      setState(() {
+        isOnboarding = false;
+      });
+    }
+  }
+
 
   // This widget is the root of your application.
   @override
@@ -23,7 +49,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
       darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
-      home: const OnboardingPage(),
+      home: isOnboarding ? const OnboardingPage() : const HomePage(),
     );
   }
 }

@@ -16,22 +16,17 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.only(top: 30, left: 24, right: 24),
             child: Column(
               children: [
-                Row(
-                  children: [Text(
-                    'Hello, ',
-                    style: const TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 32,
+               const Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                      "Hello, what's on your mind? 👋",
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        fontSize: 32,
+                      ),
+                                        ),
                     ),
-                  ),
-                  Text(
-                    'Siraj 👋',
-                    style: TextStyle(
-                      fontFamily: 'Poppins',
-                      fontSize: 32,
-                      fontWeight: FontWeight.bold
-                    ),
-                  )
                   ]
                 ),
                 Consumer<NotesOperation>(

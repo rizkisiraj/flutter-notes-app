@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:notes_app/view/HomePage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({Key? key}) : super(key: key);
+
+  void saveKey() async {
+    final prefs = await SharedPreferences.getInstance();
+    if(!prefs.containsKey("isOnboarding")) {
+      prefs.setBool("isOnboarding", false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -76,6 +84,7 @@ class OnboardingPage extends StatelessWidget {
                             padding: EdgeInsets.symmetric(vertical: 12)
                           ),
                           onPressed: () {
+                            saveKey();
                             Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
                           },
                           child: const Text('Get Started',
